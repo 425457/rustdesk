@@ -1783,6 +1783,27 @@ pub fn rustdesk_interval(i: Interval) -> ThrottledInterval {
 }
 
 pub fn load_custom_client() {
+    // === CUSTOM BUILD: 硬编码定制配置 ===
+    // 直接注入 HARD_SETTINGS，无需 custom.txt 签名
+    {
+        let mut hard = config::HARD_SETTINGS.write().unwrap();
+        hard.insert("disable-settings".to_string(), "Y".to_string());
+        hard.insert("hide-server-settings".to_string(), "Y".to_string());
+        hard.insert("hide-proxy-settings".to_string(), "Y".to_string());
+        hard.insert("hide-websocket-settings".to_string(), "Y".to_string());
+        hard.insert("hide-stop-service".to_string(), "Y".to_string());
+        hard.insert("hide-powered-by-me".to_string(), "Y".to_string());
+        hard.insert("disable-change-permanent-password".to_string(), "Y".to_string());
+    }
+    // 设置内置选项
+    {
+        let mut builtin = config::BUILTIN_SETTINGS.write().unwrap();
+        builtin.insert("hide-server-settings".to_string(), "Y".to_string());
+        builtin.insert("hide-proxy-settings".to_string(), "Y".to_string());
+        builtin.insert("hide-websocket-settings".to_string(), "Y".to_string());
+    }
+    // === END CUSTOM BUILD ===
+
     #[cfg(debug_assertions)]
     if let Ok(data) = std::fs::read_to_string("./custom.txt") {
         read_custom_client(data.trim());

@@ -231,6 +231,10 @@ os-version = "0.2"
 hound = "3.5"
 docopt = "1.1"
 
+[package.metadata.vcpkg]
+git = "https://github.com/microsoft/vcpkg"
+branch = "master"
+
 [package.metadata.bundle]
 name = "RustDesk"
 identifier = "com.carriez.rustdesk"
